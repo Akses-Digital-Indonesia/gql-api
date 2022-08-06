@@ -1,11 +1,11 @@
 {
-    "name": "bagisto/graphql-api-modified",
+    "name": "bagisto/graphql-api",
     "description": "Bagisto GraphQL API",
     "license": "MIT",
     "authors": [
         {
-            "name": "Vivek Sharma",
-            "email": "viveksh047@webkul.com"
+            "name": "Akses Digital",
+            "email": "developer@aksesdigital.com"
         }
     ],
     "require": {
