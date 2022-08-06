@@ -1,11 +1,11 @@
 {
-    "name": "aksesdigital/graphql-api",
-    "description": "Akses Digital Customize Bagisto GraphQL API",
+    "name": "bagisto/graphql-api",
+    "description": "Bagisto GraphQL API",
     "license": "MIT",
     "authors": [
         {
-            "name": "Akses Digital",
-            "email": "developer@aksesdigital.com"
+            "name": "Vivek Sharma",
+            "email": "viveksh047@webkul.com"
         }
     ],
     "require": {
