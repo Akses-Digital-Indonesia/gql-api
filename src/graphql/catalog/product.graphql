@@ -6,8 +6,6 @@ extend type Query {
 
     productFlats: [ProductFlat!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\Product\\Models\\ProductFlat")
 
-    ProductAttributeValues: [ProductAttributeValue!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\Product\\Models\\ProductAttributeValue")
-
     productFlat(id: ID @eq): ProductFlat @find(model: "Webkul\\Product\\Models\\ProductFlat")
 
     relatedProducts(productId: Int!): [Product] @field(resolver: "Webkul\\GraphQLAPI\\Queries\\Catalog\\ProductContent@getRelatedProducts")
