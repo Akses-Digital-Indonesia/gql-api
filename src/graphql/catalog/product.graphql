@@ -83,8 +83,9 @@ input UpdateVariantInput {
     name: String!
     color: Int
     size: Int
-    front_print: Int
-    back_print: Int
+    size_tshirt: Int
+    size_print_front: Int
+    size_print_back: Int
     inventories: [VariantInventoryInput!]
     price: Float!
     weight: Float!
@@ -109,6 +110,7 @@ type Product {
     id: ID!
     type: String!
     attributeFamilyId: Int! @rename(attribute: "attribute_family_id")
+    productNumber: String @rename(attribute: "product_number")
     sku: String!
     parentId: ID @rename(attribute: "parent_id")
     createdAt: DateTime @rename(attribute: "created_at")
@@ -180,6 +182,7 @@ type ProductFlat {
     width: Float
     height: Float
     depth: Float
+    inventories: [Inventory] @hasMany
     product: Product! @belongsTo(relation: "product")
     variants: [ProductFlat] @hasMany
     parent: ProductFlat @belongsTo(relation: "parent")
