@@ -93,6 +93,7 @@ type Attribute {
 input FilterAttributesInput {
     id: ID
     code: String
+    class: String
     adminName: String @rename(attribute: "admin_name")
     type: String
     isRequired: Int @rename(attribute: "is_required")
