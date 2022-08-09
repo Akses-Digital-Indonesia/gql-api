@@ -4,7 +4,7 @@ extend type Query {
 
     product(id: ID @eq): Product @find(model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
 
-    productFlats: [ProductFlat!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\Product\\Models\\ProductFlat")
+    productFlats: [ProductFlat!] @paginate(type: "paginator", defaultCount: 50, model: "Webkul\\Product\\Models\\ProductFlat")
 
     productFlat(id: ID @eq): ProductFlat @find(model: "Webkul\\Product\\Models\\ProductFlat")
 
@@ -170,6 +170,12 @@ type ProductFlat {
     colorLabel: String @rename(attribute: "color_label")
     size: Int
     sizeLabel: String @rename(attribute: "size_label")
+    sizeTshirt: Int @rename(attribute: "size_tshirt")
+    sizetshirtLabel: String @rename(attribute: "size_tshirt_label")
+    sizeprintFront: Int @rename(attribute: "size_print_front")
+    sizeprintfrontLabel: String @rename(attribute: "size_print_front_label")
+    sizeprintBack: Int @rename(attribute: "size_print_back")
+    sizeprintbackLabel: String @rename(attribute: "size_print_back_label")
     locale: String!
     channel: String!
     productId: ID! @rename(attribute: "product_id")
