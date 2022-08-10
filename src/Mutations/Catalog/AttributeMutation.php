@@ -69,6 +69,7 @@ class AttributeMutation extends Controller
             'code'       => ['required', 'unique:attributes,code', new \Webkul\Core\Contracts\Validations\Code],
             'admin_name' => 'required',
             'type'       => 'required',
+            'class'      => 'required',
         ]);
         
         if ($validator->fails()) {
@@ -139,6 +140,7 @@ class AttributeMutation extends Controller
             'code'       => ['required', 'unique:attributes,code,' . $id, new \Webkul\Core\Contracts\Validations\Code],
             'admin_name' => 'required',
             'type'       => 'required',
+            'class'      => 'required',
         ]);
         
         if ($validator->fails()) {
