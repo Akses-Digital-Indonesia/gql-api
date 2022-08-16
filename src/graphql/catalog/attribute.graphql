@@ -93,9 +93,11 @@ type Attribute {
 input FilterAttributesInput {
     id: ID
     code: String
+    class: String
     adminName: String @rename(attribute: "admin_name")
     type: String
     isRequired: Int @rename(attribute: "is_required")
+    isConfigurable: Boolean! @rename(attribute: "is_configurable")
     isUnique: Int @rename(attribute: "is_unique")
     valuePerLocale: Int @rename(attribute: "value_per_locale")
     valuePerChannel: Int @rename(attribute: "value_per_channel")
