@@ -35,6 +35,7 @@ extend type Mutation {
 input CreateAttributeInput {
     code: String!
     type: String!
+    class: String!
     adminName: String! @rename(attribute: "admin_name")
     isRequired: Boolean! @rename(attribute: "is_required")
     isUnique: Boolean! @rename(attribute: "is_unique")
@@ -72,6 +73,7 @@ type Attribute {
     code: String!
     adminName: String! @rename(attribute: "admin_name")
     type: String!
+    class: String!
     position: Int
     isRequired: Boolean! @rename(attribute: "is_required")
     isUnique: Boolean! @rename(attribute: "is_unique")
