@@ -261,10 +261,27 @@ class AttributeMutation extends Controller
             }
         }
 
-        $response = [
-            'options'       => $options,
-            // 'swatch_value'  => $swatch_value <-- this create error in bagisto
-        ];
+
+        // FIX BAGISTO BUG - NO SWATCH VALUE VARIABLE
+        if ( isset($option['swatch_value']) && $option['swatch_value']) {
+            if ( isset($data['swatch_type']) && $data['swatch_type'] == 'image' ) {
+                
+                $response = [
+                    'options'       => $options,
+                    'swatch_value'  => $swatch_value
+                ];
+            } else {
+                $response = [
+                    'options'       => $options,
+                    'swatch_value'  => $options[$key]['swatch_value']
+                ];
+            }
+        }
+
+        // $response = [
+        //     'options'       => $options,
+        //     'swatch_value'  => $swatch_value
+        // ];
 
         return $response;
     }
