@@ -129,3 +129,4 @@ type AttributeOptionTranslation {
     label: String!
     attributeOptionId: ID! @rename(attribute: "attribute_option_id")
 }
+
