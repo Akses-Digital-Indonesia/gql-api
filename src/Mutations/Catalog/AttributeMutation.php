@@ -159,7 +159,7 @@ class AttributeMutation extends Controller
 
             $swatch_value = [];
             if ( isset($data['options']) && $data['options']) {
-                $options = $this->manageAttribnuteOptions($data);
+                $options = $this->manageAttributeOptions($data);
 
                 $data['options'] = (isset($options['options']) && $options['options']) ? $options['options'] : [];
                 $swatch_value = (isset($options['swatch_value']) && $options['swatch_value']) ? $options['swatch_value'] : [];
@@ -261,10 +261,27 @@ class AttributeMutation extends Controller
             }
         }
 
-        $response = [
-            'options'       => $options,
-            'swatch_value'  => $swatch_value
-        ];
+
+        // FIX BAGISTO BUG - NO SWATCH VALUE VARIABLE
+        if ( isset($option['swatch_value']) && $option['swatch_value']) {
+            if ( isset($data['swatch_type']) && $data['swatch_type'] == 'image' ) {
+                
+                $response = [
+                    'options'       => $options,
+                    'swatch_value'  => $swatch_value
+                ];
+            } else {
+                $response = [
+                    'options'       => $options,
+                    'swatch_value'  => $options[$key]['swatch_value']
+                ];
+            }
+        }
+
+        // $response = [
+        //     'options'       => $options,
+        //     'swatch_value'  => $swatch_value
+        // ];
 
         return $response;
     }
