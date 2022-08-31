@@ -129,10 +129,69 @@ class UserMutation extends Controller
         $validator = \Validator::make($data, [
             'name'     => 'required',
             'email'    => 'email|unique:admins,email,' . $id,
-            'password' => 'nullable',
-            'password_confirmation' => 'nullable|required_with:password|same:password',
+            // 'password' => 'nullable',
+            // 'password_confirmation' => 'nullable|required_with:password|same:password',
             'status'   => 'sometimes',
             'role_id'  => 'required',
+        ]);
+        
+        if ($validator->fails()) {
+            throw new Exception($validator->messages());
+        }
+
+        try {
+            // if (! $data['password']) {
+            //     unset($data['password']);
+            // } else {
+            //     $isPasswordChanged = true;
+            //     $data['password'] = bcrypt($data['password']);
+            // }
+    
+            if (isset($data['status'])) {
+                $data['status'] = 1;
+            } else {
+                $data['status'] = 0;
+            }
+    
+            Event::dispatch('user.admin.update.before', $id);
+    
+            $admin = $this->adminRepository->update($data, $id);
+    
+            // if ($isPasswordChanged) {
+            //     Event::dispatch('user.admin.update-password', $admin);
+            // }
+    
+            Event::dispatch('user.admin.update.after', $admin);
+            
+            return $admin;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword($rootValue, array $args, GraphQLContext $context)
+    {
+        if (! isset($args['id']) || !isset($args['input']) || (isset($args['input']) && !$args['input'])) {
+            throw new Exception(trans('bagisto_graphql::app.admin.response.error-invalid-parameter'));
+        }
+
+        if (! bagisto_graphql()->validateAPIUser($this->guard)) {
+            throw new Exception(trans('bagisto_graphql::app.admin.response.invalid-header'));
+        }
+
+        $data = $args['input'];
+        $id = $args['id'];
+        
+        $validator = \Validator::make($data, [
+            'password' => 'required',
+            'password_confirmation' => 'required_with:password|same:password',
         ]);
         
         if ($validator->fails()) {
@@ -145,12 +204,6 @@ class UserMutation extends Controller
             } else {
                 $isPasswordChanged = true;
                 $data['password'] = bcrypt($data['password']);
-            }
-    
-            if (isset($data['status'])) {
-                $data['status'] = 1;
-            } else {
-                $data['status'] = 0;
             }
     
             Event::dispatch('user.admin.update.before', $id);

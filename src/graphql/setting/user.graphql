@@ -14,6 +14,11 @@ extend type Mutation {
         id: ID!,
         input: UpdateUserInput!
     ): User @field(resolver: "Webkul\\GraphQLAPI\\Mutations\\Setting\\UserMutation@update")
+
+    updateUserPassword(
+        id: ID!,
+        input: UpdateUserPasswordInput!
+    ): User @field(resolver: "Webkul\\GraphQLAPI\\Mutations\\Setting\\UserMutation@updatePassword")
     
     deleteUser(id: ID!): User @field(resolver: "Webkul\\GraphQLAPI\\Mutations\\Setting\\UserMutation@delete")
 
@@ -36,10 +41,13 @@ input CreateUserInput {
 input UpdateUserInput {
     name: String!
     email: String!
-    password: String
-    passwordConfirmation: String @rename(attribute: "password_confirmation")
     roleId: Int! @rename(attribute: "role_id")
     status: Boolean!
+}
+
+input UpdateUserPasswordInput {
+    password: String
+    passwordConfirmation: String @rename(attribute: "password_confirmation")
 }
 
 input CreateUserLoginInput {
