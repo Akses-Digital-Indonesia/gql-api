@@ -5,6 +5,7 @@ namespace Webkul\GraphQLAPI;
 use JWTAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Product\Repositories\ProductRepository;
 use Webkul\Product\Repositories\ProductImageRepository;
 use Webkul\Product\Repositories\ProductVideoRepository;
 use Webkul\Product\Repositories\ProductCustomerGroupPriceRepository;
@@ -16,6 +17,12 @@ use Webkul\Product\Repositories\ProductBundleOptionProductRepository;
 
 class BagistoGraphql
 {
+    /**
+     * ProductRepository object
+     *
+     * @var \Webkul\Product\Repositories\ProductRepository
+     */
+    protected $productRepository;
     /**
      * ProductImageRepository object
      *
@@ -91,6 +98,7 @@ class BagistoGraphql
     /**
      * Create a new instance.
      *
+     * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
      * @param  \Webkul\Product\Repositories\ProductImageRepository  $productImageRepository
      * @param  \Webkul\Product\Repositories\ProductVideoRepository  $productVideoRepository
      * @param  \Webkul\Product\Repositories\ProductCustomerGroupPriceRepository  $productCustomerGroupPriceRepository
@@ -103,6 +111,7 @@ class BagistoGraphql
      * @return void
      */
     public function __construct(
+        ProductRepository $productRepository,
         ProductCustomerGroupPriceRepository $productCustomerGroupPriceRepository,
         ProductGroupedProductRepository $productGroupedProductRepository,
         ProductDownloadableLinkRepository $productDownloadableLinkRepository,
@@ -112,6 +121,8 @@ class BagistoGraphql
         ProductImageRepository $productImageRepository,
         ProductVideoRepository $productVideoRepository
     )   {
+        $this->productRepository = $productRepository;
+
         $this->productCustomerGroupPriceRepository = $productCustomerGroupPriceRepository;
 
         $this->productGroupedProductRepository = $productGroupedProductRepository;
@@ -448,6 +459,11 @@ class BagistoGraphql
     {
         $variants = [];
         foreach ($data['variants'] as $key => $variant) {
+            if (isset($variant['sku']) && $variant['variant_id'] == null) {    // this one is additionally modified
+                $lastProductId = $this->productRepository->latest('id')->first();
+                $latestProductId = $lastProductId->id;
+                $variant['variant_id'] = $latestProductId + $key + 1;  // ends here
+            }
             if ( isset($variant['variant_id']) && $variant['variant_id']) {
                 if ( isset($variant['inventories']) && $variant['inventories'] ) {
 
