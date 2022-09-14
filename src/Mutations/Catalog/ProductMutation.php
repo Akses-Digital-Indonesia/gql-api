@@ -76,6 +76,12 @@ class ProductMutation extends Controller
 
         $data = $args['input'];
 
+        $sku_validation = $this->productRepository->where('sku', $data['sku'])->first();
+
+        if ($sku_validation !== null) {
+            throw new Exception(trans('This sku has already been taken.'));
+        }
+
         if (ProductType::hasVariants($data['type'])
             && (! isset($data['super_attributes'])
                 || ! count($data['super_attributes']))
