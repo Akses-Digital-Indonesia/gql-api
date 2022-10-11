@@ -238,7 +238,8 @@ class AttributeMutation extends Controller
         foreach($data['options'] as $index => $option) {
             
             if ( (isset($option['admin_name']) && $option['admin_name']) && (isset($option['translations']) && is_array($option['translations'])) ) {
-                $key = strtolower(str_replace(" ", "_", $option['admin_name']));
+                // $key = strtolower(str_replace(" ", "_", $option['admin_name']));
+                $key = str_replace(" ", "_", $option['admin_name']);
                 
                 $options[$key] = [
                     'admin_name'    => $option['admin_name'],
