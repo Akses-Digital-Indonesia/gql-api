@@ -1,6 +1,6 @@
 #Catalog\Product Related API
 extend type Query {
-    products(input: FilterProductsInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Catalog\\FilterProducts")): [Product!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
+    products(input: FilterProductsInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Catalog\\FilterProducts") @eq orderBy: [OrderByClause!] @orderBy): [Product!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
 
     product(id: ID @eq): Product @find(model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
 
@@ -9,6 +9,8 @@ extend type Query {
     productFlat(id: ID @eq): ProductFlat @find(model: "Webkul\\Product\\Models\\ProductFlat")
 
     relatedProducts(productId: Int!): [Product] @field(resolver: "Webkul\\GraphQLAPI\\Queries\\Catalog\\ProductContent@getRelatedProducts")
+
+    sortProducts: [Product] @field(resolver: "Webkul\\GraphQLAPI\\Queries\\Catalog\\ProductContent@sortProducts")
 }
 
 extend type Mutation {
@@ -104,6 +106,16 @@ input FilterProductsInput {
     parentId: ID @rename(attribute: "parent_id")
     attributeFamily: String @rename(attribute: "attribute_family")
     qty: Int
+}
+
+input OrderByClause {
+    column: String!
+    order: SortOrder!
+}
+
+enum SortOrder {
+  ASC
+  DESC
 }
 
 type Product {
