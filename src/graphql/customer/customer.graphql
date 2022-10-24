@@ -48,6 +48,7 @@ type Customer {
     name: String
     gender: String
     dateOfBirth: String @rename(attribute: "date_of_birth")
+    storeName: String @rename(attribute: "store_name")
     email: String!
     phone: String
     image: String!

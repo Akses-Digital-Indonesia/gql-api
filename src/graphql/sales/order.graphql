@@ -1,6 +1,6 @@
 # Sales\Order Related APIs
 extend type Query {
-    orders(input: FilterOrderInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Sales\\FilterOrder")): [Order!] @paginate(type: "paginator" defaultCount:10 model: "Webkul\\Sales\\Models\\Order")
+    orders(input: FilterOrderInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Sales\\FilterOrder") orderBy: [OrderByClause!] @orderBy): [Order!] @paginate(type: "paginator" defaultCount:10 model: "Webkul\\Sales\\Models\\Order")
 
     order(id: ID @eq): Order @find(model: "Webkul\\Sales\\Models\\Order")
 
@@ -33,6 +33,16 @@ input FilterOrderInput {
     status: String
     billedTo: String @rename(attribute: "billed_to")
     shippedTo: String @rename(attribute: "shipped_to")
+}
+
+input OrderByClause {
+    column: String!
+    order: SortOrder!
+}
+
+enum SortOrder {
+  ASC
+  DESC
 }
 
 input FilterOrderInvoiceInput {
