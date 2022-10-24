@@ -1,6 +1,10 @@
 # Sales\Order Related APIs
 extend type Query {
+<<<<<<< HEAD
     orders(input: FilterOrderInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Sales\\FilterOrder") orderBy: [OrderByClause!] @orderBy): [Order!] @paginate(type: "paginator" defaultCount:10 model: "Webkul\\Sales\\Models\\Order")
+=======
+    orders(input: FilterOrderInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Sales\\FilterOrder") @eq orderBy: [OrderByClause!] @orderBy): [Order!] @paginate(type: "paginator" defaultCount:10 model: "Webkul\\Sales\\Models\\Order")
+>>>>>>> 473d8719d124af8f84aec75a32b82fbb9d4f7229
 
     order(id: ID @eq): Order @find(model: "Webkul\\Sales\\Models\\Order")
 
