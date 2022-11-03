@@ -1,6 +1,6 @@
 #Catalog\Product Related API
 extend type Query {
-    products(input: FilterProductsInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Catalog\\FilterProducts") @eq orderBy: [OrderByClause!] @orderBy): [Product!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
+    products(input: FilterProductsInput @builder(method: "Webkul\\GraphQLAPI\\Queries\\Catalog\\FilterProducts") orderBy: [OrderByClause!] @orderBy): [Product!] @paginate(type: "paginator", defaultCount: 10, model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
 
     product(id: ID @eq): Product @find(model: "Webkul\\GraphQLAPI\\Models\\Catalog\\Product")
 
