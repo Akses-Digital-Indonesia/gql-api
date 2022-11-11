@@ -163,6 +163,7 @@ type OrderAddress {
     address2: String
     postcode: String
     city: String
+    subdistrict: String
     state: String
     country: String
     email: String
